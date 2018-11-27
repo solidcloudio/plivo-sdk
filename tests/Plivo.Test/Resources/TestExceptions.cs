@@ -22,7 +22,7 @@ namespace Plivo.Test.Resources
             var ex =
                 Assert.Throws<PlivoValidationException>(
                     () => Api.Application.Create(
-                        "", "http://www.com", null));
+                        appName: "", answerUrl: "http://www.com", answerMethod: null));
             Assert.That(ex.Message, Is.EqualTo("appName is mandatory, can not be null or empty"));
         }
 
