@@ -96,8 +96,7 @@ namespace Plivo.Client
                     )
                 );
             _client.DefaultRequestHeaders.Authorization = authHeader;
-            _client.DefaultRequestHeaders.Add("User-Agent", "plivo-dotnet/" +
-                                                            Version.SdkVersion);
+            _client.DefaultRequestHeaders.Add("User-Agent", "plivo-dotnet/" + ThisAssembly.AssemblyVersion);
             _client.BaseAddress = new Uri("https://api.plivo.com/" + Version.ApiVersion + "/");
 
             _jsonSettings = new JsonSerializerSettings
