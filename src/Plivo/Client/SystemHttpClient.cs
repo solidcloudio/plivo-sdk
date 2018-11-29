@@ -47,6 +47,7 @@ namespace Plivo.Client
         /// <param name="proxyServerSettings">Proxy settings.</param>
         public SystemHttpClient(BasicAuth basicAuth, Dictionary<string, string> proxyServerSettings)
         {
+#if NETSTANDARD2_0
             IWebProxy proxy = null;
             var networkCreds = new NetworkCredential();
             networkCreds.UserName = proxyServerSettings["Username"];
@@ -78,7 +79,6 @@ namespace Plivo.Client
             {
                 proxy = null;
             }
-         
 
             HttpClientHandler httpClientHandler = new HttpClientHandler()
             {
@@ -87,6 +87,13 @@ namespace Plivo.Client
                 UseProxy = proxy != null, 
                 Proxy = proxy
             };
+#else
+            HttpClientHandler httpClientHandler = new HttpClientHandler()
+            {
+                PreAuthenticate = true,
+                UseDefaultCredentials = false
+            };
+#endif
             _client = new System.Net.Http.HttpClient(httpClientHandler);
             var authHeader =
                 new AuthenticationHeaderValue("Basic",
